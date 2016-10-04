@@ -1,0 +1,17 @@
+language: ruby
+rvm:
+- 2.3.1
+addons:
+  postgresql: '9.4'
+before_script:
+- psql -c 'create database travis_ci_test;' -U postgres
+- cp config/database.yml.travis config/database.yml
+deploy:
+  provider: heroku
+  api_key:
+    secure: I0qvGz46zCULpsMdmYD4JaLIYTPS+hq2T5GCyBzorqlIioRA+vvKUVTprwOxcllGxhg6TaoK+a+b7QHL3yhFcVAm7DFuPwwe33jp/Q/ltRP1W1sZ/Ap6AY9hBmp/cks/PSyvemF72GqREBYUGmlvyWqRZo6azg6NtcWxTNhsPvhB56QUHRu21G3fFs/euBHYAg17vu1z9BzZ+cNouMX5yCE3vaLLOZxx0K21gc4e0WSL+h0BFTlgmB+DwPBbEgTSRQsPEPzmpOQH0UWRkiO4w/77Boc7wFnU1Q/QUNhF/X87+uF43EZeNecCxf1w9NXOk10IlxgypWN9Bsh88Wac708edDxbDmkR5QqKt+EXnv7dr/O9Vpeltj0txSkpzg96aIzfWgsMa5CPSIPdeduHQdwYDuxQ7IQWrvqkSYWCZgoPpxt8q1knB5nrPz5yEhgqf8x+I4gztXCrafzidmCqFYjae20sEu6E8elnGXJhIt2oaIFzhZxB1nxtw4g1rhpfFcMkmBQm4p4QI+le+Ql9fTrbwtGo4a8oe6KwUSgNy/AbKwsfXnsGIwtg68xYw2+bNXbGxbwLyurH/vgZLOZoEQ2poJpCg+J0MYBveI1A53aJJJiWDwlAMDX9XvBU+ntR2YYQw2l6JzScfCeeEzKs76g7dFirT6sbcbLvZNocui0=
+  app: rage-tamer
+  on:
+    repo: sdossettswift/rage-tamer
+  run:
+    - "rake db:migrate"
